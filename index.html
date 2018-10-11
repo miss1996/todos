@@ -19,7 +19,7 @@
 			</header>
 			<!-- This section should be hidden by default and shown when there are todos -->
 			<section class="main">
-				<input id="toggle-all" class="toggle-all" type="checkbox">
+				<input id="toggle-all" class="toggle-all" type="checkbox" @click="todosAllHandle" v-model="todosAll">
 				<label for="toggle-all">Mark all as complete</label>
 				<ul class="todo-list" id="app">
 					<!-- These are here just to show the structure of the list items -->
@@ -32,9 +32,9 @@
 						</div>
 						<input class="edit" value="Create a TodoMVC template">
 					</li> -->
-					<li v-for="(item, i) in todos">
+					<li v-for="(item, i) in todos" :class="{completed: item.completed}">
 						<div class="view">
-							<input class="toggle" type="checkbox">
+							<input class="toggle" type="checkbox" v-model="item.completed">
 							<label>{{ item.desc }}</label>
 							<button class="destroy" @click="btn(item.id)"></button>
 						</div>

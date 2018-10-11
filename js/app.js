@@ -3,6 +3,7 @@ var vm = new Vue({
     data:{
         id:'',
         newtodo:'',
+        todosAll:false,
         todos:[
             {id:1,desc:'吃饭',completed:false},
             {id:2,desc:'睡觉',completed:false},
@@ -34,6 +35,13 @@ var vm = new Vue({
                 }
             })
         },
+        todosAllHandle(){
+            // 让this.todos中的每一项的completed变为this.toggleAll
+            this.todos.forEach((item) => {
+                //console.log(this.todosAll)
+                item.completed = this.todosAll
+            })
+        }
     },
     filters: {  //修改任务
         //1.先求出要修改的任务内容
