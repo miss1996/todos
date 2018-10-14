@@ -4,6 +4,8 @@ var vm = new Vue({
         id:'',
         newtodo:'',
         todosAll:false,
+        isEditing: -1,
+        isSeleted: 'all',
         todos:[
             {id:1,desc:'吃饭',completed:false},
             {id:2,desc:'睡觉',completed:false},
@@ -41,10 +43,41 @@ var vm = new Vue({
                 //console.log(this.todosAll)
                 item.completed = this.todosAll
             })
+        },
+        editTodo(id){ //编辑任务栏
+            // console.log(id)
+            this.isEditing = id
+        },
+        editDone() {
+            //给编辑任务栏重新赋值
+            this.isEditing = -1
+        },
+        clearDone(){    //清除所有已完成的任务
+            this.todos = this.todos.filter(item => {
+                return !item.completed
+            })
+        },
+        filterTodo(val = 'all'){   //切换不同状态的任务
+            // console.log(val)
+            this.isSeleted = val
         }
     },
-    filters: {  //修改任务
-        //1.先求出要修改的任务内容
-        //2.通过过滤器进行任务的修改
+    directives: {   
+        focus(el,binding){  //添加光标
+            // console.log(binding.value)
+            if(binding.value){
+                el.focus()
+            }
+        }
+    },
+    computed:{ 
+        reft(){  //完成了的任务取消
+            return (this.todos.filter(item => {
+                return !item.completed
+            })).length
+        },
+        newTodos(){
+            
+        }
     }
 })

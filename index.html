@@ -32,34 +32,34 @@
 						</div>
 						<input class="edit" value="Create a TodoMVC template">
 					</li> -->
-					<li v-for="(item, i) in todos" :class="{completed: item.completed}">
+					<li v-for="(item, i) in newTodos" :key="item.id" :class="{completed: item.completed, 'editing':item.id == isEditing}">
 						<div class="view">
 							<input class="toggle" type="checkbox" v-model="item.completed">
-							<label>{{ item.desc }}</label>
+							<label @dblclick="editTodo(item.id)">{{ item.desc }}</label>
 							<button class="destroy" @click="btn(item.id)"></button>
 						</div>
-						<input class="edit" value="Rule the web">
+						<input class="edit" v-focus="isEditing == item.id" v-model="item.desc" @keyup.enter="editDone">
 					</li>
 				</ul>
 			</section>
 			<!-- This footer should hidden by default and shown when there are todos -->
 			<footer class="footer">
 				<!-- This should be `0 items left` by default -->
-				<span class="todo-count"><strong>0</strong> item left</span>
+				<span class="todo-count"><strong>{{ reft }}</strong> item left</span>
 				<!-- Remove this if you don't implement routing -->
 				<ul class="filters">
 					<li>
-						<a class="selected" href="#/">All</a>
+						<a @click="filterTodo('all')" :class="{'selected': isSeleted == 'all'}" href="#/">All</a>
 					</li>
 					<li>
-						<a href="#/active">Active</a>
+						<a @click="filterTodo('active')"  :class="{'selected': isSeleted == 'active'}" href="#/active">Active</a>
 					</li>
 					<li>
-						<a href="#/completed">Completed</a>
+						<a @click="filterTodo('completed')"  :class="{'selected': isSeleted == 'completed'}" href="#/completed">Completed</a>
 					</li>
 				</ul>
 				<!-- Hidden if no completed items are left ↓ -->
-				<button class="clear-completed">Clear completed</button>
+				<button class="clear-completed" @click="clearDone">Clear completed</button>
 			</footer>
 		</section>
 		<footer class="info">
